@@ -83,62 +83,65 @@ p, li { white-space: pre-wrap; }
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionOpen">
    <property name="text">
-    <string>Open...</string>
+    <string>打开...</string>
+   </property>
+   <property name="toolTip">
+    <string>打开文件</string>
    </property>
   </action>
   <action name="actionSave">
    <property name="text">
-    <string>Save...</string>
+    <string>保存...</string>
    </property>
   </action>
   <action name="actionExit">
    <property name="text">
-    <string>Exit</string>
+    <string>退出</string>
    </property>
   </action>
   <action name="actioncancel">
    <property name="text">
-    <string>cancel</string>
+    <string>取消</string>
    </property>
   </action>
   <action name="actionedit">
    <property name="text">
-    <string>edit</string>
+    <string>编辑</string>
    </property>
   </action>
   <action name="actioncopy">
    <property name="text">
-    <string>copy</string>
+    <string>拷贝</string>
    </property>
   </action>
   <action name="actionpase">
    <property name="text">
-    <string>paste</string>
+    <string>粘贴</string>
    </property>
   </action>
   <action name="actioncut">
    <property name="text">
-    <string>cut</string>
+    <string>剪切</string>
    </property>
   </action>
   <action name="actionAbout">
    <property name="text">
-    <string>About</string>
+    <string>关于</string>
    </property>
   </action>
   <action name="actionCompile">
    <property name="text">
-    <string>Compile</string>
+    <string>编译</string>
    </property>
   </action>
   <action name="actionnew">
    <property name="text">
-    <string>new</string>
+    <string>新建</string>
    </property>
   </action>
   <action name="actionSave_As">
    <property name="text">
-    <string>Save As...</string>
+    <string>另存为...</string>
    </property>
   </action>
  </widget>
