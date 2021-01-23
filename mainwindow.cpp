@@ -5,7 +5,8 @@
 #include <QString>
 #include <QTextCodec>
 #include <QDebug>
-
+#include <QByteArray>
+#include <string.h>
 
 //定义一个宏文件用于打印日志
 #define cout qDebug()
@@ -24,6 +25,27 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+/**
+ * @brief 自定义的保存文件的函数
+ * @param fileName 文件名
+ * @param buf 要保存的字符指针
+ */
+void MainWindow::saveFile(QString fileName, const char *buf)
+{
+    // 转码
+    QTextCodec * codec = QTextCodec::codecForName("UTF8");
+    char *pfile = codec->fromUnicode(fileName).data();
+    // 打开文件
+    FILE * fp = fopen(pfile,"w");
+
+    if(!fp)
+        return;
+
+    fputs(buf,fp);
+
+    fclose(fp);
+
 }
 
 /**
@@ -49,7 +71,7 @@ void MainWindow::on_actionOpen_triggered()
     FILE *fp = fopen(file,"r");
     if(!fp)
         return;
-   cout<<"文件打开成功"<<endl;
+  // cout<<"文件打开成功"<<endl;
 
     // 定义一个1024字节的缓存 buf
     char buf[1024];
@@ -65,11 +87,13 @@ void MainWindow::on_actionOpen_triggered()
        // 读取文件
        fgets(buf,1024,fp);
 
-       cout<<buf;
+      // cout<<buf;
        txt += codec->toUnicode(buf);
 
+       //实时显示到文本框
        ui->textEdit->setText(txt);
     }
+
     //关闭文件
     fclose(fp);
 
@@ -88,20 +112,19 @@ void MainWindow::on_actionSave_triggered()
       fileName =QFileDialog::getSaveFileName();
     }
    // 转码
-   QTextCodec * codec = QTextCodec::codecForName("UTF8");
-   char *pfile = codec->fromUnicode(fileName).data();
-   // 打开文件
-   FILE * fp = fopen(pfile,"w");
+//   QTextCodec * codec = QTextCodec::codecForName("UTF8");
+//   char *pfile = codec->fromUnicode(fileName).data();
+//   // 打开文件
+//   FILE * fp = fopen(pfile,"w");
 
-   if(!fp)
-       return;
+//   if(!fp)
+//       return;
 
     // 读取输入框textEdit的内容
     QString txt = ui->textEdit->toPlainText();
 
     const char *buf = txt.toStdString().data();
-    fputs(buf,fp);
-    fclose(fp);
+    saveFile(fileName,buf);
 }
 /**
  * @brief 另存为对话框
@@ -110,20 +133,12 @@ void MainWindow::on_actionSave_As_triggered()
 {
     // 对话框保存文件名
    fileName =QFileDialog::getSaveFileName();
-    // 转码
-    QTextCodec * codec = QTextCodec::codecForName("UTF8");
-    char *pfile = codec->fromUnicode(fileName).data();
-    // 打开文件
-    FILE * fp = fopen(pfile,"w");
 
-    if(!fp)
-        return;
     // 读取输入框textEdit的内容
     QString txt = ui->textEdit->toPlainText();
 
     const char *buf = txt.toStdString().data();
-    fputs(buf,fp);
-    fclose(fp);
+    saveFile(fileName,buf);
 }
 
 /**
