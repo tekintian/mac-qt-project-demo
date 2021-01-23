@@ -5,7 +5,6 @@
 #include <QString>
 #include <QTextCodec>
 #include <QDebug>
-#include <QByteArray>
 #include <string.h>
 
 //定义一个宏文件用于打印日志
