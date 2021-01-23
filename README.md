@@ -69,3 +69,79 @@ c
   ~~~
 
   
+
+
+
+
+
+C++构造函数:  类名::类名
+
+~~~cpp
+// MainWindow 类构造函数
+MainWindow::MainWindow(QWidget *parent)
+    : QMainWindow(parent)
+    , ui(new Ui::MainWindow)
+{
+    ui->setupUi(this);
+}
+~~~
+
+
+
+c++析构函数: 类名::~类名   
+
+~~~cpp
+// MainWindow析构函数 ~
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
+~~~
+
+
+
+C++方法:  类名::方法名
+
+
+
+在类中自定义方法, 需要现在 类的头文件 类名.h 的 slots中定义函数, 然后在类文件中实现, 如:
+
+mainwindow.h
+
+~~~h
+private slots:
+		// 定义函数
+    void saveFile(QString fileName, const char *buf);
+    // ......
+~~~
+
+
+
+mainwindow.cpp
+
+~~~cpp
+/**
+ * @brief 自定义的保存文件的函数
+ * @param fileName 文件名
+ * @param buf 要保存的字符指针
+ */
+void MainWindow::saveFile(QString fileName, const char *buf)
+{
+    // 转码
+    QTextCodec * codec = QTextCodec::codecForName("UTF8");
+    char *pfile = codec->fromUnicode(fileName).data();
+    // 打开文件
+    FILE * fp = fopen(pfile,"w");
+
+    if(!fp)
+        return;
+
+    fputs(buf,fp);
+
+    fclose(fp);
+
+}
+~~~
+
+
+
