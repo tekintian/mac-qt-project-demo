@@ -1,0 +1,1 @@
+# mac-qt-project-demo
