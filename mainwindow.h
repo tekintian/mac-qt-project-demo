@@ -37,6 +37,8 @@ private slots:
     void saveFile(QString fileName, const char *buf);
 
 
+    void on_actionCompile_triggered();
+
 private:
     Ui::MainWindow *ui;
 };

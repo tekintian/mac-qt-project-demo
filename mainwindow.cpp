@@ -111,15 +111,6 @@ void MainWindow::on_actionSave_triggered()
        // 对话框保存文件名
       fileName =QFileDialog::getSaveFileName();
     }
-   // 转码
-//   QTextCodec * codec = QTextCodec::codecForName("UTF8");
-//   char *pfile = codec->fromUnicode(fileName).data();
-//   // 打开文件
-//   FILE * fp = fopen(pfile,"w");
-
-//   if(!fp)
-//       return;
-
     // 读取输入框textEdit的内容
     QString txt = ui->textEdit->toPlainText();
 
@@ -138,6 +129,7 @@ void MainWindow::on_actionSave_As_triggered()
     QString txt = ui->textEdit->toPlainText();
 
     const char *buf = txt.toStdString().data();
+    // 保存文件
     saveFile(fileName,buf);
 }
 
@@ -185,4 +177,40 @@ void MainWindow::on_actionpase_triggered()
 void MainWindow::on_actionExit_triggered()
 {
     exit(EXIT_SUCCESS);
+}
+/**
+ * @brief 编译
+ */
+void MainWindow::on_actionCompile_triggered()
+{
+    if(NULL == fileName){
+        fileName = QFileDialog::getSaveFileName();
+         const char *buf = ui->textEdit->toPlainText().toStdString().data();
+         saveFile(fileName,buf);
+    }else{
+        QString des = fileName;
+        des.replace(".c",".out");
+
+        char comm[1024] = "gcc -o ";
+        strcat(comm, des.toStdString().data());
+
+        strcat(comm," ");
+
+        strcat(comm, fileName.toStdString().data());
+
+        // linux 切换目录命令 cd ;windows命令:  cmd /k
+        char cmd[256] = "cd ";
+
+        // 程序编译成功 system 返回 0
+        if(!system(comm)){
+            strcat(cmd,des.toStdString().data());
+        }else{
+            strcat(cmd, comm);
+        }
+        // 控制台输出命令
+         cout<<cmd;
+
+        // 执行系统命令
+        system(cmd);
+    }
 }
